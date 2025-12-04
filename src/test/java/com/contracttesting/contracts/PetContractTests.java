@@ -60,4 +60,48 @@ public class PetContractTests extends TestBase{
         assertThat(getResponse.jsonPath().getString("name"), equalTo("Buddy"));
         assertThat(getResponse.jsonPath().getString("status"), equalTo("available"));
     }
+
+    @Test(description = "Verify PUT /pet updates an existing pet")
+    public void testUpdatePet() {
+
+        // Step 1: Create a new pet first (required before updating)
+        String createPetJson = """
+        {
+            "id": 999999,
+            "category": { "id": 1, "name": "Dogs" },
+            "name": "Rex",
+            "photoUrls": ["url1"],
+            "tags": [{ "id": 1, "name": "Tag1" }],
+            "status": "available"
+        }
+        """;
+
+        Response createResponse = petClient.createPet(createPetJson);
+        assertThat(createResponse.getStatusCode(), equalTo(200));
+
+        // Step 2: Update the same pet
+        String updatePetJson = """
+        {
+            "id": 999999,
+            "category": { "id": 1, "name": "Dogs" },
+            "name": "Rex-Updated",
+            "photoUrls": ["url1"],
+            "tags": [{ "id": 1, "name": "Tag1" }],
+            "status": "sold"
+        }
+        """;
+
+        Response updateResponse = petClient.updatePet(updatePetJson);
+
+        // Step 3: Assert update success
+        assertThat(updateResponse.getStatusCode(), equalTo(200));
+
+        // Step 4: Validate schema
+        updateResponse.then().assertThat()
+                .body(matchesJsonSchemaInClasspath("schemas/pet-schema.json"));
+
+        // Step 5: Verify fields were updated
+        assertThat(updateResponse.jsonPath().getString("name"), equalTo("Rex-Updated"));
+        assertThat(updateResponse.jsonPath().getString("status"), equalTo("sold"));
+    }
 }
