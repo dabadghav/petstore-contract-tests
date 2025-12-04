@@ -1,10 +1,9 @@
 
 - `TestBase.java` – sets up RestAssured with base URI and logging.
 - `PetClient.java` – encapsulates GET /pet/{id} API call.
-- `PetContractTests.java` – TestNG test that:
-    1. Retrieves a valid pet ID dynamically.
-    2. Calls GET /pet/{id} via `PetClient`.
-    3. Validates response status and JSON schema.
+- `PetContractTests.java` – TestNG tests for Pet endpoints:
+    1. **GET /pet/{id}** – retrieves an existing pet by ID, validates HTTP status, key fields (`id`, `name`), and JSON schema (`pet-schema.json`).
+    2. **POST /pet** – creates a new pet using a JSON payload, validates HTTP status and response fields, confirms creation via GET, and validates JSON schema (`pet-schema.json`).
 - `schemas/` – contains JSON schemas for Pet, Category, and Tag.
 
 ---
