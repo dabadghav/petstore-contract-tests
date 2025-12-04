@@ -2,11 +2,8 @@ package com.contracttesting.contracts;
 
 import com.contracttesting.base.TestBase;
 import com.contracttesting.clients.PetClient;
-import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
-
-import java.util.List;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.MatcherAssert.assertThat;
