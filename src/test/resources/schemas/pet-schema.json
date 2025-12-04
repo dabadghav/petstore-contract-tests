@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Pet",
+  "type": "object",
+  "properties": {
+    "id": { "type": "integer" },
+    "category": { "$ref": "category-schema.json" },
+    "name": { "type": "string" },
+    "photoUrls": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "tags": {
+      "type": "array",
+      "items": { "$ref": "tag-schema.json" }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["available", "pending", "sold"]
+    }
+  },
+  "required": ["name", "photoUrls"]
+}
